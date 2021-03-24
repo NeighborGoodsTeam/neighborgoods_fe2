@@ -7,6 +7,7 @@ import "./App.css";
 import NavigationBar from "./components/static/Navbar";
 import Footer from "./components/static/Footer";
 import Home from "./components/consumer/Home";
+import SearchKeywords from "./components/consumer/SearchKeywords";
 
 function App() {
   return (
@@ -18,11 +19,17 @@ function App() {
     // login
     // sign-up
     //
+
     <div className="App">
       <NavigationBar />
       <Route exact path="/">
         <Home />
       </Route>
+
+      <Route exact path="/search">
+        <SearchKeywords />
+      </Route>
+
       <Footer />
     </div>
   );
