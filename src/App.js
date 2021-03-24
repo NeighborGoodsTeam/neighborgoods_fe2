@@ -1,18 +1,29 @@
-import './App.css';
+import Bootstrap from "bootstrap/dist/css/bootstrap.css";
+import { Route } from "react-router-dom";
 
+import "./App.css";
+
+// component imports
+import NavigationBar from "./components/static/Navbar";
+import Footer from "./components/static/Footer";
+import Home from "./components/consumer/Home";
 
 function App() {
   return (
     // nav
     // footer
     // routes:
-      // home
-      // search
-      // login
-      // sign-up
-      // 
+    // home
+    // search
+    // login
+    // sign-up
+    //
     <div className="App">
-      empty
+      <NavigationBar />
+      <Route exact path="/">
+        <Home />
+      </Route>
+      <Footer />
     </div>
   );
 }
