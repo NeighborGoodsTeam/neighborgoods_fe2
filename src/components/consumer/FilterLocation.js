@@ -23,7 +23,7 @@ function FilterLocation() {
 
   // google maps distance matrix functionality
   const url =
-    "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=";
+    "http://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=";
   async function getDistanceMatrix() {
     const key = process.env.REACT_APP_GOOGLEMAPS_KEY;
     const bizlat = filteredData[0].latitude;
