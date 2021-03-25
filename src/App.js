@@ -27,7 +27,8 @@ function App() {
   const [filterLocationComplete, setFilterLocationComplete] = useState(false);
   const [user, setUser] = useState(null);
   const [bizInfo, setBizInfo] = useState(null);
-  const [bizLatLong, setBizLatLong] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   return (
     <div className="App">
@@ -64,10 +65,10 @@ function App() {
           <SignUpBusinessInfo setBizInfo={setBizInfo}/>
       )} />
       <Route path="/sign-up-business-location" render={(props) => (
-          <SignUpBusinessLocation user={user} bizInfo={bizInfo} setBizLatLong={setBizLatLong}/>
+          <SignUpBusinessLocation user={user} bizInfo={bizInfo} setLatitude={setLatitude} setLongitude={setLongitude}/>
       )} />
       <Route path="/sign-up-business-upload-inventory" render={(props) => (
-          <SignUpBusinessUploadInventory user={user} bizInfo={bizInfo} bizLatLong={bizLatLong}/>
+          <SignUpBusinessUploadInventory user={user} bizInfo={bizInfo} latitude={latitude} longitude={longitude}/>
       )} />
 
       <Footer />
