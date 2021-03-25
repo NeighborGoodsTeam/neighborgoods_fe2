@@ -13,10 +13,10 @@ function FilterLocation() {
   const {
     importData,
     keyword,
-    longitude,
-    setLongitude,
-    latitude,
-    setLatitude,
+    userlongitude,
+    setUserLongitude,
+    userlatitude,
+    setUserLatitude,
     setFilteredData,
     distancePref,
     setDistancePref,
@@ -42,8 +42,8 @@ function FilterLocation() {
   //
   function Coords(geo) {
     let crds = geo.coords;
-    setLongitude(crds.longitude);
-    setLatitude(crds.latitude);
+    setUserLongitude(crds.longitude);
+    setUserLatitude(crds.latitude);
   }
 
   function Error(err) {

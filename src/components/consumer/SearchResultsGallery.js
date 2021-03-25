@@ -5,8 +5,8 @@ import SearchContext from "../SearchContext";
 function SearchResultsGallery() {
   const {
     keyword,
-    longitude,
-    latitude,
+    userlongitude,
+    userlatitude,
     filteredData,
     keywordSearchComplete,
     filterLocationComplete,
@@ -18,8 +18,8 @@ function SearchResultsGallery() {
   //
   // filter search results by distance specified
   function filterDistance(arr) {
-    var lat1 = (latitude * Math.PI) / 180;
-    var lon1 = (longitude * Math.PI) / 180;
+    var lat1 = (userlatitude * Math.PI) / 180;
+    var lon1 = (userlongitude * Math.PI) / 180;
 
     for (let i = 0; i < arr.length; i++) {
       var lat2 = (arr[i].latitude * Math.PI) / 180;
@@ -40,8 +40,8 @@ function SearchResultsGallery() {
   }
   // find distance of individual property
   function findDistance(e) {
-    var lat1 = (latitude * Math.PI) / 180;
-    var lon1 = (longitude * Math.PI) / 180;
+    var lat1 = (userlatitude * Math.PI) / 180;
+    var lon1 = (userlongitude * Math.PI) / 180;
     var lat2 = (e.latitude * Math.PI) / 180;
     var lon2 = (e.longitude * Math.PI) / 180;
     var distlat = lat2 - lat1;
