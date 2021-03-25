@@ -102,7 +102,12 @@ function App() {
           />
         )}
       />
-      <BusinessPage />
+      <Route
+        path="/business-page"
+        render={() => (
+          <BusinessPage />
+        )}
+        />
 
       <Footer />
     </div>
