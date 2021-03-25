@@ -6,8 +6,8 @@ import "./App.css";
 // component imports
 import NavigationBar from "./components/static/Navbar";
 
-import Footer from "./components/static/Footer";
-import Home from "./components/consumer/Home";
+import Footer from "./components/static/footer";
+import Home from "./components/consumer/home";
 import SearchKeywords from "./components/consumer/SearchKeywords";
 import FilterLocation from "./components/consumer/FilterLocation";
 import SearchResultsGallery from "./components/consumer/SearchResultsGallery";
