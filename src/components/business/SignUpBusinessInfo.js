@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom"
 
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
+import Container from 'react-bootstrap/Container'
 
 function SignUpBusinessInfo(props) {
   const [businessInfo, setBusinessInfo] = useState(null)
@@ -26,7 +27,20 @@ function SignUpBusinessInfo(props) {
     return <Redirect to="/sign-up-business-location" />
   }
 
+  var backgroundIMG = 'https://res.cloudinary.com/lenilunderman/image/upload/v1616709370/BusinessSignUp_LogoBusinessTag-PopUp_nvztku.png'
+  var backgroundhome = {
+        'backgroundImage': 'url('+backgroundIMG+')',
+        'backgroundSize': "contain",
+        'height':'100vh',
+        'width':'100%',
+        'objectFit': 'cover',
+        'backgroundRepeat': 'no-repeat',
+        'backgroundSize': '100% 100%',
+  }
+
   return(
+    <Container style={backgroundhome} fluid>
+    <div className="login-div">
     <Form
       className="login-form"
       onSubmit={handleSubmit}
@@ -46,6 +60,7 @@ function SignUpBusinessInfo(props) {
           name="business_name"
           type="text"
           placeholder="Business Name"
+          className="login-form"
         />
       </Form.Group>
       <Form.Group controlId="formBasicIndustry">
@@ -64,12 +79,15 @@ function SignUpBusinessInfo(props) {
         </Form.Control>
       </Form.Group>
       <Button
+        className="login-btn"
         variant="primary"
         type="submit"
       >
         Next
       </Button>
     </Form>
+    </div>
+    </Container>
   )
 }
 
