@@ -1,27 +1,57 @@
 import React, { useState } from "react"
-// import { Redirect } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
-function SignUpBusinessLocation() {
+import { getLatLong } from "../../api/google-maps"
+
+function SignUpBusinessLocation(props) {
   const [businessLocation, setBusinessLocation] = useState(null)
-  // const [nextClicked, setNextClicked] = useState(false)
+  const [nextClicked, setNextClicked] = useState(false)
+  const [lat, setLat] = useState(null)
+  const [lng, setLng] = useState(null)
+
+  const { setLatitude, setLongitude } = props
 
   const handleChange = event => {
     event.persist()
     setBusinessLocation({ ...businessLocation, [event.target.name]: event.target.value })
   }
 
-  const handleSubmit = event => {
-    event.preventDefault()
-    console.log(businessLocation)
-    // setNextClicked(true)
+  // format the address data from form to be sent to Google API
+  const translateAddress = () => {
+    if (businessLocation.address2) {
+      const formatAddress = `${businessLocation.address}, ${businessLocation.address2},
+        ${businessLocation.city}, ${businessLocation.state}, ${businessLocation.zipCode}`
+      const formatAddressToUrl = formatAddress.replace(/ /g, '+')
+      return formatAddressToUrl
+    } else {
+      const formatAddress = `${businessLocation.address}, ${businessLocation.city}, ${businessLocation.state}, ${businessLocation.zipCode}`
+      const formatAddressToUrl = formatAddress.replace(/ /g, '+')
+      return formatAddressToUrl
+    }
   }
 
-  // if (nextClicked) {
-  //   return <Redirect to="/sign-up-business-location" />
-  // }
+  const handleSubmit = event => {
+    event.preventDefault()
+
+    // call Google API to retrieve lat long
+    getLatLong(translateAddress)
+      .then(res => {
+        setLat(res.data.results[0].geometry.location.lat)
+        setLng(res.data.results[0].geometry.location.lng)
+      })
+      .catch(error => console.log(error))
+
+    setNextClicked(true)
+  }
+
+  if (nextClicked) {
+    setLatitude(lat)
+    setLongitude(lng)
+    return <Redirect to="/sign-up-business-upload-inventory" />
+  }
 
   return(
     <Form
@@ -29,20 +59,52 @@ function SignUpBusinessLocation() {
       onSubmit={handleSubmit}
       >
       <h2>Where Can We Find You?</h2>
-      <Form.Group controlId="formBasicLogo">
+      <Form.Group controlId="formBasicUrl">
         <Form.Control
           onChange={handleChange}
-          name="logo"
+          name="url"
           type="text"
-          placeholder="Image Link"
+          placeholder="http://"
         />
       </Form.Group>
-      <Form.Group controlId="formBasicBusinessName">
+      <Form.Group controlId="formBasicAddress">
         <Form.Control
           onChange={handleChange}
-          name="business_name"
+          name="address"
           type="text"
-          placeholder="Business Name"
+          placeholder="Address"
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicAddress2">
+        <Form.Control
+          onChange={handleChange}
+          name="address2"
+          type="text"
+          placeholder="Address 2"
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicCity">
+        <Form.Control
+          onChange={handleChange}
+          name="city"
+          type="text"
+          placeholder="City"
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicState">
+        <Form.Control
+          onChange={handleChange}
+          name="state"
+          type="text"
+          placeholder="State"
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicZipCode">
+        <Form.Control
+          onChange={handleChange}
+          name="zipCode"
+          type="text"
+          placeholder="Zip Code"
         />
       </Form.Group>
       <Button

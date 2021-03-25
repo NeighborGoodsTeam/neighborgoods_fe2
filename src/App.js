@@ -18,6 +18,7 @@ import Login from "./components/business/Login";
 import CreateAccount from "./components/business/CreateAccount";
 import SignUpBusinessInfo from "./components/business/SignUpBusinessInfo";
 import SignUpBusinessLocation from "./components/business/SignUpBusinessLocation";
+import SignUpBusinessUploadInventory from "./components/business/SignUpUploadInventory";
 
 function App() {
   const [keyword, setKeyword] = useState(null);
@@ -28,6 +29,11 @@ function App() {
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
   const [filteredData, setFilteredData] = useState(null);
+  const [user, setUser] = useState(null);
+  const [bizInfo, setBizInfo] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
 
   return (
     <div className="App">
@@ -64,6 +70,7 @@ function App() {
           <SearchResultsGallery />
         </Route>
       </SearchContext.Provider>
+
       <Route path="/login" render={() => <Login />} />
       <Route path="/create-account" render={() => <CreateAccount />} />
       <Route
@@ -74,6 +81,22 @@ function App() {
         path="/sign-up-business-location"
         render={() => <SignUpBusinessLocation />}
       />
+      <Route path="/login" render={() => (
+          <Login setUser={setUser}/>
+      )} />
+      <Route path="/create-account" render={() => (
+          <CreateAccount setUser={setUser}/>
+      )} />
+      <Route path="/sign-up-business-info" render={() => (
+          <SignUpBusinessInfo setBizInfo={setBizInfo}/>
+      )} />
+      <Route path="/sign-up-business-location" render={(props) => (
+          <SignUpBusinessLocation user={user} bizInfo={bizInfo} setLatitude={setLatitude} setLongitude={setLongitude}/>
+      )} />
+      <Route path="/sign-up-business-upload-inventory" render={(props) => (
+          <SignUpBusinessUploadInventory user={user} bizInfo={bizInfo} latitude={latitude} longitude={longitude}/>
+      )} />
+
 
       <Footer />
     </div>
