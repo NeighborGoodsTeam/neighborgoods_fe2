@@ -19,6 +19,7 @@ import CreateAccount from "./components/business/CreateAccount";
 import SignUpBusinessInfo from "./components/business/SignUpBusinessInfo";
 import SignUpBusinessLocation from "./components/business/SignUpBusinessLocation";
 import SignUpBusinessUploadInventory from "./components/business/SignUpUploadInventory";
+import BusinessPage from "./components/business/BusinessPage";
 
 function App() {
   const [keyword, setKeyword] = useState(null);
@@ -69,7 +70,7 @@ function App() {
       <Route path="/sign-up-business-upload-inventory" render={(props) => (
           <SignUpBusinessUploadInventory user={user} bizInfo={bizInfo} bizLatLong={bizLatLong}/>
       )} />
-
+      <BusinessPage />
       <Footer />
     </div>
   );
