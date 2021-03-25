@@ -14,8 +14,28 @@ code {
 
 .login-form {
   width: 300px;
-  border: 1px solid black;
+  border: 1px solid rgb(110, 110, 110);
   border-radius: 5%;
   padding: 20px;
-  margin: 5% 5%
+  background-color: #ffffff;
+  margin: auto;
+}
+
+.title-site{
+  font-family: “Playfair Display”, serif;
+  font-weight: 800;
+  text-align: center;
+}
+
+.login-div{
+  padding-top: 150px;
+}
+
+.login-btn{
+  background-color: #0F0440 !important;
+  width:100% !important;
+}
+
+.centerItems{
+  text-align: center !important;
 }
