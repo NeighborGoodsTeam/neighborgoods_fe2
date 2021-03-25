@@ -18,12 +18,16 @@ import Login from "./components/business/Login";
 import CreateAccount from "./components/business/CreateAccount";
 import SignUpBusinessInfo from "./components/business/SignUpBusinessInfo";
 import SignUpBusinessLocation from "./components/business/SignUpBusinessLocation";
+import SignUpBusinessUploadInventory from "./components/business/SignUpUploadInventory";
 
 function App() {
   const [keyword, setKeyword] = useState(null);
   const [importData, setImportData] = useState(null);
   const [keywordSearchComplete, setKeywordSearchComplete] = useState(false);
   const [filterLocationComplete, setFilterLocationComplete] = useState(false);
+  const [user, setUser] = useState(null);
+  const [bizInfo, setBizInfo] = useState(null);
+  const [bizLatLong, setBizLatLong] = useState(null);
 
   return (
     <div className="App">
@@ -51,16 +55,19 @@ function App() {
         </Route>
       </SearchContext.Provider>
       <Route path="/login" render={() => (
-          <Login />
+          <Login setUser={setUser}/>
       )} />
       <Route path="/create-account" render={() => (
-          <CreateAccount />
+          <CreateAccount setUser={setUser}/>
       )} />
       <Route path="/sign-up-business-info" render={() => (
-          <SignUpBusinessInfo />
+          <SignUpBusinessInfo setBizInfo={setBizInfo}/>
       )} />
-      <Route path="/sign-up-business-location" render={() => (
-          <SignUpBusinessLocation />
+      <Route path="/sign-up-business-location" render={(props) => (
+          <SignUpBusinessLocation user={user} bizInfo={bizInfo} setBizLatLong={setBizLatLong}/>
+      )} />
+      <Route path="/sign-up-business-upload-inventory" render={(props) => (
+          <SignUpBusinessUploadInventory user={user} bizInfo={bizInfo} bizLatLong={bizLatLong}/>
       )} />
 
       <Footer />

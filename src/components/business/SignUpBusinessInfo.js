@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
-function SignUpBusinessInfo() {
+function SignUpBusinessInfo(props) {
   const [businessInfo, setBusinessInfo] = useState(null)
   const [nextClicked, setNextClicked] = useState(false)
 
@@ -20,6 +20,8 @@ function SignUpBusinessInfo() {
   }
 
   if (nextClicked) {
+    const { setBizInfo } = props
+    setBizInfo({ businessInfo })
     return <Redirect to="/sign-up-business-location" />
   }
 
