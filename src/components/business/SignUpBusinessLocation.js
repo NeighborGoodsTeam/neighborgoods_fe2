@@ -4,36 +4,52 @@ import { Redirect } from "react-router-dom"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
+import { getLatLong } from "../../api/google-maps"
+
 function SignUpBusinessLocation(props) {
   const [businessLocation, setBusinessLocation] = useState(null)
   const [nextClicked, setNextClicked] = useState(false)
-  // const [latLong, setLatLong] = useState(false)
+  const [lat, setLat] = useState(null)
+  const [lng, setLng] = useState(null)
 
-  // const { bizInfo, setBizLatLong } = props
+  const { setLatitude, setLongitude } = props
 
   const handleChange = event => {
     event.persist()
     setBusinessLocation({ ...businessLocation, [event.target.name]: event.target.value })
-    // console.log('businessInfo on location page: ', bizInfo)
   }
 
-  // const findBizLatLong = (query, field)=> {
-  //   // call Google Place API to find lat long based on address
-  // }
+  // format the address data from form to be sent to Google API
+  const translateAddress = () => {
+    if (businessLocation.address2) {
+      const formatAddress = `${businessLocation.address}, ${businessLocation.address2},
+        ${businessLocation.city}, ${businessLocation.state}, ${businessLocation.zipCode}`
+      const formatAddressToUrl = formatAddress.replace(/ /g, '+')
+      return formatAddressToUrl
+    } else {
+      const formatAddress = `${businessLocation.address}, ${businessLocation.city}, ${businessLocation.state}, ${businessLocation.zipCode}`
+      const formatAddressToUrl = formatAddress.replace(/ /g, '+')
+      return formatAddressToUrl
+    }
+  }
 
   const handleSubmit = event => {
     event.preventDefault()
-    console.log(businessLocation)
 
     // call Google API to retrieve lat long
-    // findBizLatLong(businessLocation, geometry)
-    //   // set state to response
-    //   .then(res => setLatLong(res))
-    //   .then(() => setBizLatLong(latLong))
+    getLatLong(translateAddress)
+      .then(res => {
+        setLat(res.data.results[0].geometry.location.lat)
+        setLng(res.data.results[0].geometry.location.lng)
+      })
+      .catch(error => console.log(error))
+
     setNextClicked(true)
   }
 
   if (nextClicked) {
+    setLatitude(lat)
+    setLongitude(lng)
     return <Redirect to="/sign-up-business-upload-inventory" />
   }
 
