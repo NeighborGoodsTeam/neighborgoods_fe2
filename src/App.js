@@ -10,6 +10,9 @@ import Home from "./components/consumer/home";
 
 // business component imports
 import Login from "./components/business/Login";
+import CreateAccount from "./components/business/CreateAccount";
+import SignUpBusinessInfo from "./components/business/SignUpBusinessInfo";
+import SignUpBusinessLocation from "./components/business/SignUpBusinessLocation";
 
 function App() {
   return (
@@ -28,6 +31,15 @@ function App() {
       </Route>
       <Route path="/login" render={() => (
           <Login />
+      )} />
+      <Route path="/create-account" render={() => (
+          <CreateAccount />
+      )} />
+      <Route path="/sign-up-business-info" render={() => (
+          <SignUpBusinessInfo />
+      )} />
+      <Route path="/sign-up-business-location" render={() => (
+          <SignUpBusinessLocation />
       )} />
       <Footer />
     </div>

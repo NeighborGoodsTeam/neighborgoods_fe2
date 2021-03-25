@@ -1,15 +1,14 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
-
-import "../../index.css"
+import { Redirect } from "react-router-dom"
 
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
-import { signIn } from "../../api/auth"
+import { signUp } from "../../api/auth"
 
-function Login() {
+function CreateAccount() {
   const [credentials, setCredentials] = useState(null)
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const handleChange = event => {
     event.persist()
@@ -20,9 +19,14 @@ function Login() {
     event.preventDefault()
     console.log(credentials)
 
-    signIn(credentials)
+    signUp(credentials)
       .then(res => console.log(res))
+      .then(() => setLoggedIn(true))
       .catch(error => console.log(error))
+  }
+
+  if (loggedIn) {
+    return <Redirect to="/sign-up-business-info" />
   }
 
   return(
@@ -30,8 +34,24 @@ function Login() {
       className="login-form"
       onSubmit={handleSubmit}
       >
+      <h2>Let's Get Started</h2>
+      <Form.Group controlId="formBasicFirstName">
+        <Form.Control
+          onChange={handleChange}
+          name="firstName"
+          type="text"
+          placeholder="First Name"
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicLastName">
+        <Form.Control
+          onChange={handleChange}
+          name="lastName"
+          type="text"
+          placeholder="Last Name"
+        />
+      </Form.Group>
       <Form.Group controlId="formBasicEmail">
-        <h2>Welcome Back!</h2>
         <Form.Control
           onChange={handleChange}
           name="email"
@@ -47,17 +67,22 @@ function Login() {
           placeholder="Password"
         />
       </Form.Group>
+      <Form.Group controlId="formBasicConfirmPassword">
+        <Form.Control
+          onChange={handleChange}
+          name="password_confirmation"
+          type="password"
+          placeholder="Confirm Password"
+        />
+      </Form.Group>
       <Button
         variant="primary"
         type="submit"
       >
-        Login
+        Next
       </Button>
-
-      <p>Don't Have an Account Yet?</p>
-      <Link to='/create-account'>SIGN UP</Link>
     </Form>
   )
 }
 
-export default Login;
+export default CreateAccount
