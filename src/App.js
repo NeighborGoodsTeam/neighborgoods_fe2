@@ -80,7 +80,6 @@ function App() {
         path="/sign-up-business-location"
         render={() => <SignUpBusinessLocation />}
       />
-      <Route path="/login" render={() => <Login setUser={setUser} />} />
       <Route
         path="/create-account"
         render={() => <CreateAccount setUser={setUser} />}
