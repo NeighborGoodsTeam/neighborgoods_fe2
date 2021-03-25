@@ -5,6 +5,7 @@ import "../../index.css"
 
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
+import Container from 'react-bootstrap/Container'
 
 import { signIn } from "../../api/auth"
 
@@ -25,13 +26,27 @@ function Login() {
       .catch(error => console.log(error))
   }
 
+  var backgroundIMG = 'https://res.cloudinary.com/lenilunderman/image/upload/v1616705481/BusinessLogIn_gckftg.png'
+  var backgroundhome = {
+        'backgroundImage': 'url('+backgroundIMG+')',
+        'backgroundSize': "contain",
+        'height':'100vh',
+        'width':'100%',
+        'objectFit': 'cover',
+        'backgroundRepeat': 'no-repeat',
+        'backgroundSize': '100% 100%',
+  }
+
+
   return(
-    <Form
+    <Container style={backgroundhome} fluid>
+      <div className="login-div">
+        <Form
       className="login-form"
       onSubmit={handleSubmit}
       >
       <Form.Group controlId="formBasicEmail">
-        <h2>Welcome Back!</h2>
+        <h2 className="title-site">Welcome Back!</h2>
         <Form.Control
           onChange={handleChange}
           name="email"
@@ -47,16 +62,23 @@ function Login() {
           placeholder="Password"
         />
       </Form.Group>
-      <Button
+      <Button className="login-btn"
         variant="primary"
         type="submit"
       >
         Login
       </Button>
-
-      <p>Don't Have an Account Yet?</p>
-      <Link to='/create-account'>SIGN UP</Link>
+    
+      <div className="centerItems">
+        <p>Don't Have an Account Yet?</p>
+      <Link to='/create-account'> SIGN UP</Link>
+      </div>
+      
     </Form>
+      </div>
+      
+    </Container>
+    
   )
 }
 

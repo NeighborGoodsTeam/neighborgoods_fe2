@@ -8,6 +8,8 @@ function SignUpBusinessInfo(props) {
   const [businessInfo, setBusinessInfo] = useState(null)
   const [nextClicked, setNextClicked] = useState(false)
 
+  const { setBizInfo } = props
+
   const handleChange = event => {
     event.persist()
     setBusinessInfo({ ...businessInfo, [event.target.name]: event.target.value })
@@ -16,12 +18,11 @@ function SignUpBusinessInfo(props) {
   const handleSubmit = event => {
     event.preventDefault()
     console.log(businessInfo)
+    setBizInfo(businessInfo)
     setNextClicked(true)
   }
 
   if (nextClicked) {
-    const { setBizInfo } = props
-    setBizInfo({ businessInfo })
     return <Redirect to="/sign-up-business-location" />
   }
 
