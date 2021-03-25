@@ -19,7 +19,6 @@ import CreateAccount from "./components/business/CreateAccount";
 import SignUpBusinessInfo from "./components/business/SignUpBusinessInfo";
 import SignUpBusinessLocation from "./components/business/SignUpBusinessLocation";
 
-
 function App() {
   const [keyword, setKeyword] = useState(null);
   const [importData, setImportData] = useState(null);
