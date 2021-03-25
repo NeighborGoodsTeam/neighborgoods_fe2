@@ -38,7 +38,10 @@ function SearchKeywords() {
   // data import function
   //
   async function getResults() {
-    const result = await axios.get("http://localhost:8000/businesses/");
+    const result = await axios.get(
+      // "http://neighborgoods-api.herokuapp.com/businesses"
+      "http://localhost:8000/businesses/"
+    );
     return result;
   }
 
@@ -48,20 +51,22 @@ function SearchKeywords() {
   if (keywordSearchComplete === false) {
     return (
       <div className="keyword-form">
-        <h3>What product are you looking for?</h3>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="keyword">
-            <Form.Control
-              required
-              type="text"
-              name="keyword"
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Next
-          </Button>
-        </Form>
+        <section className="form">
+          <h3>What product are you looking for?</h3>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="keyword">
+              <Form.Control
+                required
+                type="text"
+                name="keyword"
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <button variant="primary" type="submit">
+              Next
+            </button>
+          </Form>
+        </section>
       </div>
     );
   }

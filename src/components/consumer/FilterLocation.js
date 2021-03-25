@@ -72,29 +72,32 @@ function FilterLocation() {
   // if keyword search complete then hide form and show location filter stations
   if (keywordSearchComplete === true && filterLocationComplete === false) {
     return (
-      <div>
-        <p> Let the robots use your location, human.</p>
-        <form onSubmit={handleSubmit}>
-          <select
-            id="distance"
-            onChange={handleChange}
-            defaultValue={10}
-            required
-          >
-            <option value={1}>1 mile </option>
-            <option value={5}>5 miles </option>
-            <option value={25}>25 miles</option>
-            <option value={100}>100 miles</option>
-          </select>
-          <Button variant="primary" onClick={handleBack}>
-            Back
-          </Button>
-          <Link to="/gallery">
-            <Button variant="primary" type="submit">
-              Next
-            </Button>
-          </Link>
-        </form>
+      <div className="keyword-form">
+        <section className="form">
+          <p>
+            Let the robots use your location, human. Also, please tell us how
+            far away your results can be.
+          </p>
+          <form onSubmit={handleSubmit}>
+            <select
+              id="distance"
+              onChange={handleChange}
+              defaultValue={10}
+              required
+            >
+              <option value={1}>1 mile </option>
+              <option value={5}>5 miles </option>
+              <option value={25}>25 miles</option>
+              <option value={100}>100 miles</option>
+            </select>
+            <div className="buttons">
+              <button onClick={handleBack}>Back</button>
+              <Link to="/gallery">
+                <button type="submit">Next</button>
+              </Link>
+            </div>
+          </form>
+        </section>
       </div>
     );
   } else {

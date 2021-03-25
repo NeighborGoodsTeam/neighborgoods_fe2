@@ -1,4 +1,117 @@
+* {
+  font-family: "Montserrat", sans-serif;
+}
+/* navigation bar styling */
+.navbar {
+  background-color: #c0dcbd !important;
+}
+
+nav h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: black;
+}
+/* home page styling */
+.carousel-slide {
+  z-index: -3;
+  position: relative;
+}
 .carousel-slide img {
   max-height: 900px;
   object-fit: cover;
 }
+.home_body {
+  background-color: #edf9eb;
+}
+.home_body h2 {
+  text-align: center;
+  padding-top: 80px;
+  font-weight: 700;
+}
+.home_body h2,
+h3 {
+  font-family: "Playfair Display", serif;
+}
+.home_body h3 {
+  font-size: 28px;
+}
+div .carousel_overlay {
+  position: absolute;
+  z-index: 3;
+  left: 5%;
+  top: 20%;
+  color: white;
+}
+.carousel_overlay button {
+  background-color: white;
+  color: black;
+  width: 50%;
+  border-width: 0;
+}
+.carousel_overlay button:hover {
+  background-color: #c0dcbd;
+  color: white;
+  width: 50%;
+}
+.carousel_overlay h1 {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  font-size: 100px;
+}
+div .home_main {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+div .home_section {
+  grid-column: 3 / 7;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 100px;
+}
+.home_section img {
+  height: 300px;
+  object-fit: fill;
+}
+
+div .home_wording {
+  display: flex;
+  flex-direction: column;
+  grid-column: 5 / 7;
+  padding: 60px;
+  text-align: justify;
+}
+
+/* search page 1  */
+div .keyword-form {
+  background-image: url("./media/UserSearch_Location.png");
+  background-size: cover;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+section {
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  grid-column: 3 / 7;
+  justify-content: center;
+}
+
+form button {
+  background-color: #c0dcbd;
+  width: 50%;
+  color: white;
+  border: 0;
+}
+button:hover {
+  background-color: #edf9eb;
+  color: black;
+}
+form select {
+  width: 100%;
+  color: black;
+}
+
+/*  gallery page */
