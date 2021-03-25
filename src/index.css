@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.login-form {
+  width: 300px;
+  border: 1px solid black;
+  border-radius: 5%;
+  padding: 20px;
+  margin: 5% 5%
+}
