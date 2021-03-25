@@ -1,24 +1,62 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
-// import CSVReader from "react-csv-reader"
 
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
+import { createBusiness } from "./../../api/business"
+
 function SignUpBusinessUploadInventory(props) {
-  // const [businessInventory, setBusinessInventory] = useState(null)
-  // const [file, setFile] = useState(null)
+  const [inventory, setInventory] = useState(null)
   const [nextClicked, setNextClicked] = useState(false)
 
-  // const { bizInfo, bizLatLong } = props
+  const { bizInfo, bizAddress, latitude, longitude, user } = props
+
+  const handleChange = event => {
+    event.persist()
+    setInventory({ ...inventory, [event.target.name]: event.target.value })
+  }
 
   const handleSubmit = event => {
     event.preventDefault()
+    const businessData = {
+      name: bizInfo.name,
+      description: '',
+      addressOne: bizAddress.address,
+      addressTwo: bizAddress.address2,
+      city: bizAddress.city,
+      state: bizAddress.state,
+      zipCode: bizAddress.zipCode,
+      longitude: longitude,
+      latitude: latitude,
+      industry: bizInfo.industry,
+      phone: '',
+      website: bizAddress.url,
+      email: '',
+      logo: bizInfo.logo,
+      inventory: inventory
+    }
+    // console.log({
+    //   name: bizInfo.business_name,
+    //   description: '',
+    //   addressOne: bizAddress.address,
+    //   addressTwo: bizAddress.address2,
+    //   city: bizAddress.city,
+    //   state: bizAddress.state,
+    //   zipCode: bizAddress.zipCode,
+    //   longitude: longitude,
+    //   latitude: latitude,
+    //   industry: bizInfo.industry,
+    //   phone: '',
+    //   website: bizAddress.url,
+    //   email: '',
+    //   logo: bizInfo.logo,
+    //   inventory: inventory
+    // })
 
-    // console.log('this is the file: ', file)
+    createBusiness(user, businessData)
+      .then(res => console.log('create business: ', res))
 
-    // convert csv to list of product objects
-    // convert that list to a list of product strings
     setNextClicked(true)
   }
 
@@ -31,15 +69,15 @@ function SignUpBusinessUploadInventory(props) {
       className="login-form"
       onSubmit={handleSubmit}
       >
-      <h2>Upload Your Inventory</h2>
-      <p>1. Add list of your products to a single column CSV file.</p>
-      <p>2. Upload CSV file below.</p>
-      <Form.File
-        id="custom-file"
-        label="Select your file"
-        onChange={(event) => console.log('here is the file: ', event.target.files[0])}
-        custom
-      />
+      <h2>Add Your Inventory</h2>
+      <Form.Group controlId="exampleForm.ControlTextarea1">
+        <Form.Label>Enter products separated by commas:</Form.Label>
+        <Form.Control
+          as="textarea"
+          onChange={handleChange}
+          rows={3}
+        />
+      </Form.Group>
 
       <Button
         variant="primary"

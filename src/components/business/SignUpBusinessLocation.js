@@ -12,7 +12,7 @@ function SignUpBusinessLocation(props) {
   const [lat, setLat] = useState(null)
   const [lng, setLng] = useState(null)
 
-  const { setLatitude, setLongitude } = props
+  const { setLatitude, setLongitude, setBizAddress } = props
 
   const handleChange = event => {
     event.persist()
@@ -36,11 +36,13 @@ function SignUpBusinessLocation(props) {
   const handleSubmit = event => {
     event.preventDefault()
 
+    setBizAddress(businessLocation)
+
     // call Google API to retrieve lat long
     getLatLong(translateAddress)
       .then(res => {
-        setLat(res.data.results[0].geometry.location.lat)
-        setLng(res.data.results[0].geometry.location.lng)
+        setLatitude(res.data.results[0].geometry.location.lat)
+        setLongitude(res.data.results[0].geometry.location.lng)
       })
       .catch(error => console.log(error))
 

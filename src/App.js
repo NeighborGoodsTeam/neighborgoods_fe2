@@ -33,6 +33,7 @@ function App() {
   const [bizInfo, setBizInfo] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [bizAddress, setBizAddress] = useState(null);
 
   return (
     <div className="App">
@@ -71,15 +72,6 @@ function App() {
       </SearchContext.Provider>
 
       <Route path="/login" render={() => <Login />} />
-      <Route path="/create-account" render={() => <CreateAccount />} />
-      <Route
-        path="/sign-up-business-info"
-        render={() => <SignUpBusinessInfo />}
-      />
-      <Route
-        path="/sign-up-business-location"
-        render={() => <SignUpBusinessLocation />}
-      />
       <Route
         path="/create-account"
         render={() => <CreateAccount setUser={setUser} />}
@@ -96,6 +88,7 @@ function App() {
             bizInfo={bizInfo}
             setLatitude={setLatitude}
             setLongitude={setLongitude}
+            setBizAddress={setBizAddress}
           />
         )}
       />
@@ -107,6 +100,8 @@ function App() {
             bizInfo={bizInfo}
             latitude={latitude}
             longitude={longitude}
+            bizAddress={bizAddress}
+            user={user}
           />
         )}
       />
