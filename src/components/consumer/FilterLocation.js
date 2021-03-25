@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import SearchContext from "../SearchContext";
 
@@ -8,39 +9,29 @@ import Button from "react-bootstrap/Button";
 
 //
 function FilterLocation() {
-  const [longitude, setLongitude] = useState(0);
-  const [latitude, setLatitude] = useState(0);
-  const [distance, setDistance] = useState(0); // need help with grabbing input values
-  const [filteredData, setFilteredData] = useState(null);
+  const [formState, setFormState] = useState({});
   const {
     importData,
     keyword,
+    userlongitude,
+    setUserLongitude,
+    userlatitude,
+    setUserLatitude,
+    setFilteredData,
+    distancePref,
+    setDistancePref,
     keywordSearchComplete,
     setKeywordSearchComplete,
     filterLocationComplete,
     setFilterLocationComplete,
   } = useContext(SearchContext);
 
-  // google maps distance matrix functionality
-  const url =
-    "http://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=";
-  async function getDistanceMatrix() {
-    const key = process.env.REACT_APP_GOOGLEMAPS_KEY;
-    const bizlat = filteredData[0].latitude;
-    const bizlong = filteredData[0].longitude;
-    const result = await axios.get(
-      `${url}${latitude},${longitude}&destinations=${bizlat}%2${bizlong}&key=${key}`
-    );
-    console.log(result);
-    return result;
-  }
   // need to convert miles to meters and filter results accordingly
 
   // initial keyword filtration
   //
   function filterResults(arr, str) {
     const filtered = arr.filter((e) => Object.values(e).includes(str));
-    console.log(filtered);
     setFilteredData(filtered);
   }
   // switch states with back button
@@ -51,9 +42,8 @@ function FilterLocation() {
   //
   function Coords(geo) {
     let crds = geo.coords;
-    setLongitude(crds.longitude);
-    setLatitude(crds.latitude);
-    console.log(latitude, longitude);
+    setUserLongitude(crds.longitude);
+    setUserLatitude(crds.latitude);
   }
 
   function Error(err) {
@@ -64,17 +54,18 @@ function FilterLocation() {
   //
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(Coords, Error);
-    console.log(keyword, importData);
     if (importData !== null) {
       filterResults(importData, keyword);
     }
   }, [importData]);
 
-  // handle form submission
   function handleSubmit(event) {
-    setDistance(event.value);
+    event.persist();
+    event.preventDefault();
     setFilterLocationComplete(true);
-    console.log(distance);
+  }
+  function handleChange(event) {
+    setDistancePref({ ...formState, [event.target.id]: event.target.value });
   }
 
   // conditional rendering
@@ -83,23 +74,27 @@ function FilterLocation() {
     return (
       <div>
         <p> Let the robots use your location, human.</p>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="dist">
-            <Form.Control as="select">
-              <option value="5">5 miles</option>
-              <option value="25">25 miles</option>
-              <option value="100">100 miles</option>
-              <option value="any">anywhere</option>
-            </Form.Control>
-          </Form.Group>
-        </Form>
-        <Button variant="primary" onClick={handleBack}>
-          Back
-        </Button>
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
-          Next
-        </Button>
-        <button onClick={getDistanceMatrix}>get distance matrix</button>
+        <form onSubmit={handleSubmit}>
+          <select
+            id="distance"
+            onChange={handleChange}
+            defaultValue={10}
+            required
+          >
+            <option value={1}>1 mile </option>
+            <option value={5}>5 miles </option>
+            <option value={25}>25 miles</option>
+            <option value={100}>100 miles</option>
+          </select>
+          <Button variant="primary" onClick={handleBack}>
+            Back
+          </Button>
+          <Link to="/gallery">
+            <Button variant="primary" type="submit">
+              Next
+            </Button>
+          </Link>
+        </form>
       </div>
     );
   } else {

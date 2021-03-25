@@ -26,9 +26,14 @@ function App() {
   const [importData, setImportData] = useState(null);
   const [keywordSearchComplete, setKeywordSearchComplete] = useState(false);
   const [filterLocationComplete, setFilterLocationComplete] = useState(false);
+  const [distancePref, setDistancePref] = useState(0);
+  const [userlongitude, setUserLongitude] = useState(0);
+  const [userlatitude, setUserLatitude] = useState(0);
+  const [filteredData, setFilteredData] = useState(null);
   const [user, setUser] = useState(null);
   const [bizInfo, setBizInfo] = useState(null);
-  const [bizLatLong, setBizLatLong] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   return (
     <div className="App">
@@ -43,6 +48,14 @@ function App() {
           setImportData,
           keyword,
           setKeyword,
+          userlongitude,
+          setUserLongitude,
+          userlatitude,
+          setUserLatitude,
+          filteredData,
+          setFilteredData,
+          distancePref,
+          setDistancePref,
           keywordSearchComplete,
           setKeywordSearchComplete,
           filterLocationComplete,
@@ -52,25 +65,45 @@ function App() {
         <Route exact path="/search">
           <SearchKeywords />
           <FilterLocation />
+        </Route>
+        <Route exact path="/gallery">
           <SearchResultsGallery />
         </Route>
       </SearchContext.Provider>
-      <Route path="/login" render={() => (
-          <Login setUser={setUser}/>
-      )} />
-      <Route path="/create-account" render={() => (
-          <CreateAccount setUser={setUser}/>
-      )} />
-      <Route path="/sign-up-business-info" render={() => (
-          <SignUpBusinessInfo setBizInfo={setBizInfo}/>
-      )} />
-      <Route path="/sign-up-business-location" render={(props) => (
-          <SignUpBusinessLocation user={user} bizInfo={bizInfo} setBizLatLong={setBizLatLong}/>
-      )} />
-      <Route path="/sign-up-business-upload-inventory" render={(props) => (
-          <SignUpBusinessUploadInventory user={user} bizInfo={bizInfo} bizLatLong={bizLatLong}/>
-      )} />
+
+      <Route path="/login" render={() => <Login setUser={setUser} />} />
+      <Route
+        path="/create-account"
+        render={() => <CreateAccount setUser={setUser} />}
+      />
+      <Route
+        path="/sign-up-business-info"
+        render={() => <SignUpBusinessInfo setBizInfo={setBizInfo} />}
+      />
+      <Route
+        path="/sign-up-business-location"
+        render={(props) => (
+          <SignUpBusinessLocation
+            user={user}
+            bizInfo={bizInfo}
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+          />
+        )}
+      />
+      <Route
+        path="/sign-up-business-upload-inventory"
+        render={(props) => (
+          <SignUpBusinessUploadInventory
+            user={user}
+            bizInfo={bizInfo}
+            latitude={latitude}
+            longitude={longitude}
+          />
+        )}
+      />
       <BusinessPage />
+
       <Footer />
     </div>
   );
