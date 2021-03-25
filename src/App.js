@@ -19,6 +19,7 @@ import CreateAccount from "./components/business/CreateAccount";
 import SignUpBusinessInfo from "./components/business/SignUpBusinessInfo";
 import SignUpBusinessLocation from "./components/business/SignUpBusinessLocation";
 import SignUpBusinessUploadInventory from "./components/business/SignUpUploadInventory";
+import BusinessPage from "./components/business/BusinessPage";
 
 function App() {
   const [keyword, setKeyword] = useState(null);
@@ -71,7 +72,7 @@ function App() {
         </Route>
       </SearchContext.Provider>
 
-      <Route path="/login" render={() => <Login />} />
+      <Route path="/login" render={() => <Login setUser={setUser} />} />
       <Route
         path="/create-account"
         render={() => <CreateAccount setUser={setUser} />}
@@ -105,6 +106,12 @@ function App() {
           />
         )}
       />
+      <Route
+        path="/business-page"
+        render={() => (
+          <BusinessPage />
+        )}
+        />
 
       <Footer />
     </div>
