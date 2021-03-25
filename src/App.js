@@ -25,10 +25,15 @@ function App() {
   const [importData, setImportData] = useState(null);
   const [keywordSearchComplete, setKeywordSearchComplete] = useState(false);
   const [filterLocationComplete, setFilterLocationComplete] = useState(false);
+  const [distancePref, setDistancePref] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
+  const [filteredData, setFilteredData] = useState(null);
   const [user, setUser] = useState(null);
   const [bizInfo, setBizInfo] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+
 
   return (
     <div className="App">
@@ -43,6 +48,14 @@ function App() {
           setImportData,
           keyword,
           setKeyword,
+          longitude,
+          setLongitude,
+          latitude,
+          setLatitude,
+          filteredData,
+          setFilteredData,
+          distancePref,
+          setDistancePref,
           keywordSearchComplete,
           setKeywordSearchComplete,
           filterLocationComplete,
@@ -52,9 +65,22 @@ function App() {
         <Route exact path="/search">
           <SearchKeywords />
           <FilterLocation />
+        </Route>
+        <Route exact path="/gallery">
           <SearchResultsGallery />
         </Route>
       </SearchContext.Provider>
+
+      <Route path="/login" render={() => <Login />} />
+      <Route path="/create-account" render={() => <CreateAccount />} />
+      <Route
+        path="/sign-up-business-info"
+        render={() => <SignUpBusinessInfo />}
+      />
+      <Route
+        path="/sign-up-business-location"
+        render={() => <SignUpBusinessLocation />}
+      />
       <Route path="/login" render={() => (
           <Login setUser={setUser}/>
       )} />
@@ -70,6 +96,7 @@ function App() {
       <Route path="/sign-up-business-upload-inventory" render={(props) => (
           <SignUpBusinessUploadInventory user={user} bizInfo={bizInfo} latitude={latitude} longitude={longitude}/>
       )} />
+
 
       <Footer />
     </div>
