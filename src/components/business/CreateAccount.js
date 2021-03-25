@@ -5,8 +5,9 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
 import { signUp } from "../../api/auth"
+import { signIn } from "../../api/auth"
 
-function CreateAccount() {
+function CreateAccount(props) {
   const [credentials, setCredentials] = useState(null)
   const [loggedIn, setLoggedIn] = useState(false)
 
@@ -16,11 +17,19 @@ function CreateAccount() {
   }
 
   const handleSubmit = event => {
+    const { setUser } = props
     event.preventDefault()
-    console.log(credentials)
 
     signUp(credentials)
-      .then(res => console.log(res))
+      .then(() => {
+        let signInCreds = {
+          email: credentials.email,
+          password: credentials.password
+        }
+        signIn(signInCreds)
+          .then(res => setUser(res.data.user))
+          .catch(error => console.log(error))
+      })
       .then(() => setLoggedIn(true))
       .catch(error => console.log(error))
   }
