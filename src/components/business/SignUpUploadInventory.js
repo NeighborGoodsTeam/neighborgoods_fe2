@@ -4,17 +4,59 @@ import { Redirect } from "react-router-dom"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
+import { createBusiness } from "./../../api/business"
+
 function SignUpBusinessUploadInventory(props) {
-  // const [businessInventory, setBusinessInventory] = useState(null)
+  const [inventory, setInventory] = useState(null)
   const [nextClicked, setNextClicked] = useState(false)
 
-  // const { bizInfo, bizLatLong } = props
+  const { bizInfo, bizAddress, latitude, longitude, user } = props
+
+  const handleChange = event => {
+    event.persist()
+    setInventory({ ...inventory, [event.target.name]: event.target.value })
+  }
 
   const handleSubmit = event => {
     event.preventDefault()
+    const businessData = {
+      name: bizInfo.name,
+      description: '',
+      addressOne: bizAddress.address,
+      addressTwo: bizAddress.address2,
+      city: bizAddress.city,
+      state: bizAddress.state,
+      zipCode: bizAddress.zipCode,
+      longitude: longitude,
+      latitude: latitude,
+      industry: bizInfo.industry,
+      phone: '',
+      website: bizAddress.url,
+      email: '',
+      logo: bizInfo.logo,
+      inventory: inventory
+    }
+    // console.log({
+    //   name: bizInfo.business_name,
+    //   description: '',
+    //   addressOne: bizAddress.address,
+    //   addressTwo: bizAddress.address2,
+    //   city: bizAddress.city,
+    //   state: bizAddress.state,
+    //   zipCode: bizAddress.zipCode,
+    //   longitude: longitude,
+    //   latitude: latitude,
+    //   industry: bizInfo.industry,
+    //   phone: '',
+    //   website: bizAddress.url,
+    //   email: '',
+    //   logo: bizInfo.logo,
+    //   inventory: inventory
+    // })
 
-    // convert csv to list of product objects
-    // convert that list to a list of product strings
+    createBusiness(user, businessData)
+      .then(res => console.log('create business: ', res))
+
     setNextClicked(true)
   }
 
@@ -27,22 +69,15 @@ function SignUpBusinessUploadInventory(props) {
       className="login-form"
       onSubmit={handleSubmit}
       >
-      <h2>Upload Your Inventory</h2>
-      <p>1. Download and fill out the inventory form below</p>
-      <Button
-        variant="primary"
-        type="button"
-      >
-        Download
-      </Button>
-
-      <p>2. Submit form below</p>
-      <Button
-        variant="primary"
-        type="button"
-      >
-        Upload
-      </Button>
+      <h2>Add Your Inventory</h2>
+      <Form.Group controlId="exampleForm.ControlTextarea1">
+        <Form.Label>Enter products separated by commas:</Form.Label>
+        <Form.Control
+          as="textarea"
+          onChange={handleChange}
+          rows={3}
+        />
+      </Form.Group>
 
       <Button
         variant="primary"
