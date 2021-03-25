@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import SearchContext from "../SearchContext";
 
 // bootstrap imports
@@ -9,14 +10,31 @@ import Button from "react-bootstrap/Button";
 function FilterLocation() {
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
-  const [distance, setDistance] = useState(0);
+  const [distance, setDistance] = useState(0); // need help with grabbing input values
   const [filteredData, setFilteredData] = useState(null);
   const {
     importData,
     keyword,
     keywordSearchComplete,
     setKeywordSearchComplete,
+    filterLocationComplete,
+    setFilterLocationComplete,
   } = useContext(SearchContext);
+
+  // google maps distance matrix functionality
+  const url =
+    "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=";
+  async function getDistanceMatrix() {
+    const key = process.env.REACT_APP_GOOGLEMAPS_KEY;
+    const bizlat = filteredData[0].latitude;
+    const bizlong = filteredData[0].longitude;
+    const result = await axios.get(
+      `${url}${latitude},${longitude}&destinations=${bizlat}%2${bizlong}&key=${key}`
+    );
+    console.log(result);
+    return result;
+  }
+  // need to convert miles to meters and filter results accordingly
 
   // initial keyword filtration
   //
@@ -35,7 +53,7 @@ function FilterLocation() {
     let crds = geo.coords;
     setLongitude(crds.longitude);
     setLatitude(crds.latitude);
-    console.log(longitude, latitude);
+    console.log(latitude, longitude);
   }
 
   function Error(err) {
@@ -55,11 +73,13 @@ function FilterLocation() {
   // handle form submission
   function handleSubmit(event) {
     setDistance(event.value);
+    setFilterLocationComplete(true);
     console.log(distance);
   }
+
   // conditional rendering
   // if keyword search complete then hide form and show location filter stations
-  if (keywordSearchComplete === true) {
+  if (keywordSearchComplete === true && filterLocationComplete === false) {
     return (
       <div>
         <p> Let the robots use your location, human.</p>
@@ -76,9 +96,10 @@ function FilterLocation() {
         <Button variant="primary" onClick={handleBack}>
           Back
         </Button>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
           Next
         </Button>
+        <button onClick={getDistanceMatrix}>get distance matrix</button>
       </div>
     );
   } else {

@@ -9,6 +9,7 @@ import Footer from "./components/static/Footer";
 import Home from "./components/consumer/Home";
 import SearchKeywords from "./components/consumer/SearchKeywords";
 import FilterLocation from "./components/consumer/FilterLocation";
+import SearchResultsGallery from "./components/consumer/SearchResultsGallery";
 import SearchContext from "./components/SearchContext";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route exact path="/search">
           <SearchKeywords />
           <FilterLocation />
+          <SearchResultsGallery />
         </Route>
       </SearchContext.Provider>
       <Footer />
