@@ -1,35 +1,74 @@
-import React, { useState } from "react";
-import FilterLocation from "./FilterLocation";
+import React, { useContext } from "react";
+import axios from "axios";
+import SearchContext from "../SearchContext";
+
+// bootstrap imports
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+//
+//
+//
 function SearchKeywords() {
-  const [keyword, setKeyword] = useState(null);
-  const [keywordSearchComplete, setKeywordSearchComplete] = useState(false);
+  const {
+    setImportData,
+    setKeyword,
+    keywordSearchComplete,
+    setKeywordSearchComplete,
+  } = useContext(SearchContext);
 
   // on submit render next search station for location
+  //
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(keyword);
+    event.persist();
     setKeywordSearchComplete(true);
+    getResults()
+      .then((result) => {
+        setImportData(result.data.businesses);
+      })
+      .catch((err) => console.error(err));
   }
 
   // on input field change update form field
+  //
   function handleChange(event) {
-    setKeyword({ ...keyword, [event.target.id]: event.target.value });
-    console.log(keyword);
+    setKeyword(event.target.value);
+  }
+
+  // data import function
+  //
+  async function getResults() {
+    const result = await axios.get("http://localhost:8000/businesses/");
+    return result;
   }
 
   // conditional rendering
+  // display keyword search form by default
+  //
   if (keywordSearchComplete === false) {
     return (
-      <div>
+      <div className="keyword-form">
         <h3>What product are you looking for?</h3>
-        <form onSubmit={handleSubmit} method="POST">
-          <input type="text" id="title" onChange={handleChange} />
-          <button type="submit">Next</button>
-        </form>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="keyword">
+            <Form.Control
+              required
+              type="text"
+              name="keyword"
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Next
+          </Button>
+        </Form>
       </div>
     );
-  } else {
-    return <FilterLocation />;
+  }
+  // when keyword search has been complete then hide form
+  //
+  else {
+    return <></>;
   }
 }
 

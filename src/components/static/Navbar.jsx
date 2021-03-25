@@ -8,6 +8,8 @@ function NavigationBar() {
       <Navbar.Brand href="#/">NeighborGoods</Navbar.Brand>
       <Nav className="mr-auto">
         <Nav.Link href="#home">Log In</Nav.Link>
+        <Nav.Link href="#home">About</Nav.Link>
+        <Nav.Link href="#home">FAQ</Nav.Link>
       </Nav>
     </Navbar>
   );

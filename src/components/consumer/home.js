@@ -36,12 +36,13 @@ function Home() {
           </Carousel.Item>
         </Carousel>
       </div>
-      <h1>Shop Small</h1>
-      <p>Find local stores that are right for you</p>
-      <Link to={`/search`}>
-        <Button variant="primary">Get Started</Button>
-      </Link>
-      <div></div>
+      <div>
+        <h1>Shop Small</h1>
+        <p>Find local stores that are right for you</p>
+        <Link to={`/search`}>
+          <Button variant="primary">Get Started</Button>
+        </Link>
+      </div>
       <div>
         <h3>How it works</h3>
         <>
@@ -54,7 +55,7 @@ function Home() {
         <>
           <img src="" alt="" />
           <p>
-            Next, allow location service and refine your search results by
+            Next, allow location services and refine your search results by
             distance. Skip this step to find all stores that can meet your
             needs.
           </p>
